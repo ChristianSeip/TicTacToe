@@ -1,0 +1,39 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: rgb(33, 33, 33);
+    color: rgb(222, 222, 222);
+    margin: 0;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+tr {
+    width: 399px;
+}
+
+td {
+    width: 133px;
+    height: 133px;
+    border: 3px solid #626262;
+}
+
+tr:first-child td {
+    border-top: 0;
+}
+
+td:first-child {
+    border-left: 0;
+}
+
+tr:last-child td {
+    border-bottom: 0;
+}
+
+td:last-child {
+    border-right: 0;
+}
