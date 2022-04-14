@@ -28,6 +28,12 @@ td {
     border: 3px solid #626262;
     text-align: center;
     font-size: 6em;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+td:hover {
+    background-color: rgba(252, 248, 87, 0.67);
 }
 
 tr:first-child td {
