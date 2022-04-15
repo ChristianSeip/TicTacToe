@@ -13,6 +13,19 @@ body {
     margin: 0;
 }
 
+.container {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+main {
+    width: 450px;
+    height: 450px;
+}
+
 table {
     border-collapse: collapse;
 }
