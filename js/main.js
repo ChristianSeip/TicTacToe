@@ -64,7 +64,7 @@ function switchPlayer() {
  * @param {string} content
  */
 function replaceFieldContent(x, y, content) {
-    document.getElementById(x).getElementsByTagName('td')[y].innerText = content;
+    document.getElementById(x.toString()).getElementsByTagName('td')[y].innerText = content;
 }
 
 /**
@@ -142,7 +142,7 @@ function showEndCard() {
     toggleModal();
     document.getElementById('modal-header').innerText = "Game Over";
     document.getElementById('modal-content').innerHTML = game.winner.length === 3 ?
-        `<p>Player <b>${fields[game.winner[0][0]][game.winner[0][1]]}<b> has won!</p>` : `<p>The Game ends because there are no more possible moves left.</p>`;
+        `<p>Player <b>${fields[game.winner[0][0]][game.winner[0][1]].toUpperCase()}<b> has won!</p>` : `<p>The Game ends because there are no more possible moves left.</p>`;
     document.getElementById('modal-footer').innerHTML = `<button class="btn btn-primary" onclick="newGame();">New Game</button>`;
 }
 
