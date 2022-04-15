@@ -8,18 +8,19 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="js/main.js"></script>
 </head>
-<body>
+<body onload="showWelcomeCard();">
 
-<div class="container">
-
-    <div id="modal" class="modal-container hide">
+<div id="modal" class="container hide">
+    <div class="modal-container">
         <h2 id="modal-header"></h2>
         <div id="modal-content">
         </div>
         <div id="modal-footer">
         </div>
     </div>
+</div>
 
+<div class="container">
     <main>
         <header>Current Player: <span id="current-player"></span></header>
         <table>

@@ -89,13 +89,18 @@ td:last-child {
     background-color: #7413e7 !important;
 }
 
-.modal-container {
-    position: absolute;
+#modal {
     z-index: 1;
+    position: absolute;
+    width: 100%;
+}
+
+.modal-container {
     background-color: rgba(255, 255, 255, 0.6);
     color: rgb(33, 33, 33);
-    height: 250px;
-    width: 250px;
+    height: 300px;
+    width: 300px;
+    overflow: auto;
 }
 
 .modal-container h2 {

@@ -1,5 +1,5 @@
 let game = {
-    "activePlayer": "x",
+    "activePlayer": "o",
     "winner": [],
 };
 
@@ -22,7 +22,10 @@ function resetGame() {
             replaceFieldContent(x, y, "");
         }
     }
-    game.activePlayer = null;
+    game.activePlayer = "o";
+    game.winner = [];
+
+    switchPlayer();
 }
 
 /**
@@ -140,7 +143,7 @@ function showEndCard() {
     document.getElementById('modal-header').innerText = "Game Over";
     document.getElementById('modal-content').innerHTML = game.winner.length === 3 ?
         `<p>Player <b>${fields[game.winner[0][0]][game.winner[0][1]]}<b> has won!</p>` : `<p>The Game ends because there are no more possible moves left.</p>`;
-    document.getElementById('modal-footer').innerHTML = `<button class="btn btn-primary">New Game</button>`;
+    document.getElementById('modal-footer').innerHTML = `<button class="btn btn-primary" onclick="newGame();">New Game</button>`;
 }
 
 /**
@@ -148,4 +151,21 @@ function showEndCard() {
  */
 function toggleModal() {
     document.getElementById('modal').classList.toggle('hide');
+}
+
+function showWelcomeCard() {
+    toggleModal();
+    document.getElementById('modal-header').innerText = "Welcome to Tic Tac Toe!";
+    document.getElementById('modal-content').innerHTML = "The game is played on a 3x3 grid.<br><br>" +
+        "The first player who gets 3 marks in a row (up, down, across, or diagonally) wins the game.<br><br>" +
+        "The game is over, when all 9 squares are marked.";
+    document.getElementById('modal-footer').innerHTML = `<button class="btn btn-primary" onclick="newGame();">Start Game</button>`;
+}
+
+/**
+ * Start new Game
+ */
+function newGame() {
+    resetGame();
+    toggleModal();
 }
