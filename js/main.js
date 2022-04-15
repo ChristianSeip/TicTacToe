@@ -27,7 +27,7 @@ function resetGame(ai) {
     game.activePlayer = "o";
     game.winner = [];
     game.ai = ai;
-    game.aiSign = "o",
+    game.aiSign = "o";
 
     switchPlayer(true);
 }
@@ -54,7 +54,7 @@ function setPlayerSign(x, y) {
 }
 
 /**
- * Switch and display current player in ui
+ * Switch and display current player in ui.
  */
 function switchPlayer(reset = false) {
     game.activePlayer = game.activePlayer === "x" ? "o" : "x";
@@ -111,7 +111,7 @@ function isEmptyField(x, y) {
  * Returns an array with field coordinates of the winning line, if any player has won.
  * Otherwise we return an empty array.
  *
- * @returns {number[][]|(number|number)[][]|*[]}
+ * @returns {array}
  */
 function getWinningLine() {
     if(fields[1][1] !== null) {
@@ -164,6 +164,9 @@ function isGameOver() {
     return true;
 }
 
+/**
+ * Highlight fields of the winning line on game end.
+ */
 function showWinningLine() {
     if(game.winner.length === 3) {
         document.getElementById(game.winner[0][0].toString()).getElementsByTagName('td')[game.winner[0][1]].classList.add('blinking-text');
@@ -173,7 +176,7 @@ function showWinningLine() {
 }
 
 /**
- * Show game end card
+ * Show game end card.
  */
 function showEndCard() {
     toggleModal();
@@ -185,12 +188,15 @@ function showEndCard() {
 }
 
 /**
- * Toogle modal display status
+ * Toogle modal display status.
  */
 function toggleModal() {
     document.getElementById('modal').classList.toggle('hide');
 }
 
+/**
+ * Show welcome card as modal window.
+ */
 function showWelcomeCard() {
     toggleModal();
     document.getElementById('modal-header').innerText = "Welcome to Tic Tac Toe!";
@@ -202,7 +208,7 @@ function showWelcomeCard() {
 }
 
 /**
- * Start new Game
+ * Start new Game.
  *
  * @param {boolean} ai
  */

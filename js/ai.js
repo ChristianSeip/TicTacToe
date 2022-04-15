@@ -1,5 +1,5 @@
 /**
- * Move active player with the best move option
+ * Move active player with the best move option.
  */
 function move() {
     let move = getBestMove(game.activePlayer);
@@ -7,7 +7,7 @@ function move() {
 }
 
 /**
- * Get the field with the best winning chance
+ * Get the field with the best winning chance.
  *
  * @param {string} pov
  * @returns {array}
@@ -24,7 +24,7 @@ function getBestMove(pov) {
 }
 
 /**
- * Check if center field is a possible move
+ * Check if center field is a possible move.
  *
  * @param {string} pov
  * @returns {array}
@@ -34,7 +34,7 @@ function checkCenter(pov) {
 }
 
 /**
- * Check if possible to use diagonals
+ * Check if possible to use diagonals.
  *
  * @param {string} pov
  * @returns {array}
@@ -57,7 +57,7 @@ function checkDiagonals(pov) {
 }
 
 /**
- * Get the best possible horizontal or vertical move
+ * Get the best possible horizontal or vertical move.
  *
  * @param {string} pov
  * @returns {array}
@@ -90,7 +90,7 @@ function getBestPossibleMove(pov) {
 }
 
 /**
- * Returns the index to count marker
+ * Returns the index to count marker.
  *
  * @param {string} pov
  * @param {string} marker
