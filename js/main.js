@@ -39,10 +39,20 @@ function setPlayerSign(x, y) {
 
     fields[x][y] = game.activePlayer;
     replaceFieldContent(x, y, game.activePlayer);
-    game.activePlayer = game.activePlayer === "x" ? "y" : "x";
+
     if(isGameOver()) {
         //alert(`${winner[0][0]}:${winner[0][1]}, ${winner[1][0]}:${winner[1][1]}, ${winner[2][0]}:${winner[2][1]}`)
+        return;
     }
+    switchPlayer();
+}
+
+/**
+ * Switch and display current player in ui
+ */
+function switchPlayer() {
+    game.activePlayer = game.activePlayer === "x" ? "y" : "x";
+    document.getElementById('current-player').innerText = game.activePlayer;
 }
 
 /**
