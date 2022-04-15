@@ -13,24 +13,14 @@ function move() {
  * @returns {array}
  */
 function getBestMove(pov) {
-    let checks = ['checkCenter', 'checkDiagonals', 'getBestPossibleMove'];
-    let move = [];
+    let enemy = pov === "x" ? "o" : "x";
+    let move = [checkCenter(pov), checkDiagonals(pov), checkDiagonals(enemy), getBestPossibleMove(pov), getBestPossibleMove(enemy)];
 
-    for(let i = 0; i < checks.length; i++) {
-        move = window[checks[i]](pov);
-        if(move.length !== 0) {
-            return move;
-        }
-
-        if(checks[i] === 'checkDiagonals') {
-            move = window[checks[i]]("x");
-            if(move.length !== 0) {
-                return move;
-            }
+    for(let i = 0; i < move.length; i++) {
+        if(move[i].length !== 0) {
+            return move[i];
         }
     }
-
-    return move;
 }
 
 /**
@@ -40,10 +30,7 @@ function getBestMove(pov) {
  * @returns {array}
  */
 function checkCenter(pov) {
-    if(fields[1][1] === null) {
-        return [1,1];
-    }
-    return [];
+    return fields[1][1] === null ? [1, 1] : [];
 }
 
 /**
@@ -54,18 +41,15 @@ function checkCenter(pov) {
  */
 function checkDiagonals(pov) {
     if(fields[1][1] === pov) {
-        if((fields[0][0] === null || fields[0][0] === pov) && (fields[2][2] === null || fields[2][2] === pov)) {
-            if(fields[0][0] === null) {
-                return [0,0];
-            }
-            return [2,2];
-        }
+        for(let i = 0; i < 3; i+=2) {
+            let b = i === 0 ? 2 : 0;
 
-        if((fields[2][0] === null || fields[2][0] === pov) && (fields[0][2] === null || fields[0][2] === pov)) {
-            if(fields[2][0] === null) {
-                return [2,0];
+            if((fields[i][0] === null || fields[i][0] === pov) && (fields[b][2] === null || fields[b][2] === pov)) {
+                if(fields[i][0] === null) {
+                    return [i,0];
+                }
+                return [b,2];
             }
-            return [0,2];
         }
     }
 
