@@ -146,3 +146,26 @@ td:last-child {
 .player-inactive {
     color: #b7b7b7;
 }
+
+.blinking-text {
+    animation:blinking-text 850ms infinite;
+    background-color: rgba(252, 248, 87, 0.67);
+}
+
+@keyframes blinking-text {
+    0% {
+        color: rgba(116, 19, 231, 0.25);
+    }
+    49% {
+        color: rgba(116, 19, 231, 0.50);
+    }
+    60% {
+        color: rgba(116, 19, 231, 0.75);
+    }
+    99% {
+        color:transparent;
+    }
+    100% {
+        color: rgba(116, 19, 231, 0.25);
+    }
+}

@@ -25,7 +25,7 @@ function resetGame() {
     game.activePlayer = "o";
     game.winner = [];
 
-    switchPlayer();
+    switchPlayer(true);
 }
 
 /**
@@ -41,6 +41,7 @@ function setPlayerSign(x, y) {
     replaceFieldContent(x, y, game.activePlayer);
 
     if(isGameOver()) {
+        showWinningLine();
         showEndCard();
         return;
     }
@@ -51,10 +52,17 @@ function setPlayerSign(x, y) {
 /**
  * Switch and display current player in ui
  */
-function switchPlayer() {
+function switchPlayer(reset = false) {
     game.activePlayer = game.activePlayer === "x" ? "o" : "x";
-    document.getElementById('playerX').classList.toggle('player-inactive');
-    document.getElementById('playerO').classList.toggle('player-inactive');
+
+    if(reset) {
+        document.getElementById('playerX').classList.remove('player-inactive');
+        document.getElementById('playerO').classList.add('player-inactive');
+    }
+    else {
+        document.getElementById('playerX').classList.toggle('player-inactive');
+        document.getElementById('playerO').classList.toggle('player-inactive');
+    }
 }
 
 /**
@@ -146,6 +154,12 @@ function isGameOver() {
     }
 
     return true;
+}
+
+function showWinningLine() {
+    document.getElementById(game.winner[0][0].toString()).getElementsByTagName('td')[game.winner[0][1]].classList.add('blinking-text');
+    document.getElementById(game.winner[1][0].toString()).getElementsByTagName('td')[game.winner[1][1]].classList.add('blinking-text');
+    document.getElementById(game.winner[2][0].toString()).getElementsByTagName('td')[game.winner[2][1]].classList.add('blinking-text');
 }
 
 /**
