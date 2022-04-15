@@ -165,9 +165,11 @@ function isGameOver() {
 }
 
 function showWinningLine() {
-    document.getElementById(game.winner[0][0].toString()).getElementsByTagName('td')[game.winner[0][1]].classList.add('blinking-text');
-    document.getElementById(game.winner[1][0].toString()).getElementsByTagName('td')[game.winner[1][1]].classList.add('blinking-text');
-    document.getElementById(game.winner[2][0].toString()).getElementsByTagName('td')[game.winner[2][1]].classList.add('blinking-text');
+    if(game.winner.length === 3) {
+        document.getElementById(game.winner[0][0].toString()).getElementsByTagName('td')[game.winner[0][1]].classList.add('blinking-text');
+        document.getElementById(game.winner[1][0].toString()).getElementsByTagName('td')[game.winner[1][1]].classList.add('blinking-text');
+        document.getElementById(game.winner[2][0].toString()).getElementsByTagName('td')[game.winner[2][1]].classList.add('blinking-text');
+    }
 }
 
 /**
