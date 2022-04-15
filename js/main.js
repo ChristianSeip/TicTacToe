@@ -3,12 +3,18 @@ let game = {
     "winner": [],
 };
 
+/**
+ * Represents the game field as 2d array.
+ */
 let fields = [
     [null, null, null],
     [null, null, null],
     [null, null, null]
 ];
 
+/**
+ * Reset the current game.
+ */
 function resetGame() {
     for(let x = 0; x < 3; x++) {
         for(let y = 0; y < 3; y++) {
@@ -19,6 +25,12 @@ function resetGame() {
     game.activePlayer = null;
 }
 
+/**
+ * Set the sign of the current player, if field is empty.
+ *
+ * @param {int} x
+ * @param {int} y
+ */
 function setPlayerSign(x, y) {
     if(!isEmptyField(x, y)) {
         alert("Das Feld ist nicht leer");
@@ -28,20 +40,39 @@ function setPlayerSign(x, y) {
     fields[x][y] = game.activePlayer;
     replaceFieldContent(x, y, game.activePlayer);
     game.activePlayer = game.activePlayer === "x" ? "y" : "x";
-    let winner = getWinningLine();
-    if(winner.length === 3) {
-        alert(`${winner[0][0]}:${winner[0][1]}, ${winner[1][0]}:${winner[1][1]}, ${winner[2][0]}:${winner[2][1]}`)
+    if(isGameOver()) {
+        //alert(`${winner[0][0]}:${winner[0][1]}, ${winner[1][0]}:${winner[1][1]}, ${winner[2][0]}:${winner[2][1]}`)
     }
 }
 
+/**
+ * Replace the content of the given field.
+ *
+ * @param {int} x
+ * @param {int} y
+ * @param {string} content
+ */
 function replaceFieldContent(x, y, content) {
     document.getElementById(x).getElementsByTagName('td')[y].innerText = content;
 }
 
+/**
+ * Check if the given field is empty.
+ *
+ * @param {int} x
+ * @param {int} y
+ * @returns {boolean}
+ */
 function isEmptyField(x, y) {
     return fields[x][y] === null;
 }
 
+/**
+ * Returns an array with field coordinates of the winning line, if any player has won.
+ * Otherwise we return an empty array.
+ *
+ * @returns {number[][]|(number|number)[][]|*[]}
+ */
 function getWinningLine() {
     if(fields[1][1] !== null) {
         if(fields[0][0] === fields[1][1] && fields[2][2] === fields[1][1]) {
@@ -66,9 +97,15 @@ function getWinningLine() {
             }
         }
     }
+
     return [];
 }
 
+/**
+ * Check if game is over.
+ *
+ * @returns {boolean}
+ */
 function isGameOver() {
     let winner = getWinningLine();
     if(winner.length === 3) {
