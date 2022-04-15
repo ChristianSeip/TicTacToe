@@ -79,18 +79,13 @@ function getBestPossibleMove(pov) {
         }
 
         if((xCount[1] === 2 && xCount[0] === 1) || (xCount[2] === 2 && xCount[0] === 1)) return possibleX[possibleX.length - 1];
-
         if((yCount[1] === 2 && yCount[0] === 1) || (yCount[2] === 2 && yCount[0] === 1)) return possibleY[possibleY.length - 1];
-
         if(xCount[1] === 1 && xCount[0] === 2) move = possibleX[possibleX.length - 1];
-
         if(yCount[1] === 1 && yCount[0] === 2) move = possibleY[possibleY.length - 1];
     }
 
     if(move.length !== 0) return move;
-
     if(possibleX.length !== 0) return possibleX[possibleX.length - 1];
-
     if(possibleY.length !== 0) return possibleY[possibleY.length - 1];
 }
 
