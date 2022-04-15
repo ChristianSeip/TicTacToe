@@ -1,6 +1,8 @@
 let game = {
     "activePlayer": "o",
     "winner": [],
+    "ai": false,
+    "aiSign": "o",
 };
 
 /**
@@ -15,7 +17,7 @@ let fields = [
 /**
  * Reset the current game.
  */
-function resetGame() {
+function resetGame(ai) {
     for(let x = 0; x < 3; x++) {
         for(let y = 0; y < 3; y++) {
             fields[x][y] = null;
@@ -24,6 +26,8 @@ function resetGame() {
     }
     game.activePlayer = "o";
     game.winner = [];
+    game.ai = ai;
+    game.aiSign = "o",
 
     switchPlayer(true);
 }
@@ -62,6 +66,10 @@ function switchPlayer(reset = false) {
     else {
         document.getElementById('playerX').classList.toggle('player-inactive');
         document.getElementById('playerO').classList.toggle('player-inactive');
+    }
+
+    if(game.ai && game.activePlayer === game.aiSign) {
+        move();
     }
 }
 
@@ -170,7 +178,8 @@ function showEndCard() {
     document.getElementById('modal-header').innerText = "Game Over";
     document.getElementById('modal-content').innerHTML = game.winner.length === 3 ?
         `<p>Player <b>${fields[game.winner[0][0]][game.winner[0][1]].toUpperCase()}<b> has won!</p>` : `<p>The Game ends because there are no more possible moves left.</p>`;
-    document.getElementById('modal-footer').innerHTML = `<button class="btn btn-primary" onclick="newGame();">New Game</button>`;
+    document.getElementById('modal-footer').innerHTML = `<button class="btn btn-primary" onclick="newGame(false);">Play against friend</button>
+        <button class="btn btn-primary" onclick="newGame(true);">Play against AI</button>`;
 }
 
 /**
@@ -186,13 +195,16 @@ function showWelcomeCard() {
     document.getElementById('modal-content').innerHTML = "The game is played on a 3x3 grid.<br><br>" +
         "The first player who gets 3 marks in a row (up, down, across, or diagonally) wins the game.<br><br>" +
         "The game is over, when all 9 squares are marked.";
-    document.getElementById('modal-footer').innerHTML = `<button class="btn btn-primary" onclick="newGame();">Start Game</button>`;
+    document.getElementById('modal-footer').innerHTML = `<button class="btn btn-primary" onclick="newGame(false);">Play against friend</button>
+        <button class="btn btn-primary" onclick="newGame(true);">Play against AI</button>`;
 }
 
 /**
  * Start new Game
+ *
+ * @param {boolean} ai
  */
-function newGame() {
-    resetGame();
+function newGame(ai = false) {
+    resetGame(ai);
     toggleModal();
 }

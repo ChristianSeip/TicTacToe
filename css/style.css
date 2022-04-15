@@ -80,6 +80,7 @@ td:last-child {
     border: unset;
     border-radius: 4px;
     font-weight: bold;
+    margin: 6px;
 }
 
 .btn-primary {
@@ -96,8 +97,8 @@ td:last-child {
 .modal-container {
     background-color: rgba(255, 255, 255, 0.7);
     color: rgb(33, 33, 33);
-    height: 300px;
-    width: 300px;
+    height: 350px;
+    width: 350px;
     overflow: auto;
 }
 
@@ -116,6 +117,7 @@ td:last-child {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     padding: 12px;
 }
 
