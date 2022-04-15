@@ -3,6 +3,11 @@
     src: url("../fonts/Square_Peg/SquarePeg-Regular.ttf");
 }
 
+@font-face {
+    font-family: "Rubik";
+    src: url("../fonts/Rubik/Rubik-Regular.ttf");
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -11,6 +16,7 @@ body {
     background-color: rgb(33, 33, 33);
     color: rgb(222, 222, 222);
     margin: 0;
+    font-family: Rubik, sans-serif;
 }
 
 .container {
@@ -24,6 +30,12 @@ body {
 main {
     width: 450px;
     height: 450px;
+}
+
+main header {
+    font-weight: bold;
+    margin-top: 24px;
+    margin-bottom: 24px;
 }
 
 table {
