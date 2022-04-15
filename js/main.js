@@ -53,7 +53,8 @@ function setPlayerSign(x, y) {
  */
 function switchPlayer() {
     game.activePlayer = game.activePlayer === "x" ? "o" : "x";
-    document.getElementById('current-player').innerText = game.activePlayer.toUpperCase();
+    document.getElementById('playerX').classList.toggle('player-inactive');
+    document.getElementById('playerO').classList.toggle('player-inactive');
 }
 
 /**

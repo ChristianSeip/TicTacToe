@@ -22,7 +22,10 @@
 
 <div class="container">
     <main>
-        <header>Current Player: <span id="current-player"></span></header>
+        <div class="player-indication">
+            <span>Player <span id="playerX" class="ff-squarepeg player playerX player-inactive">X</span></span>
+            <span>Player <span id="playerO" class="ff-squarepeg player playerO">O</span></span>
+        </div>
         <table>
             <tr id="0">
                 <td onclick="setPlayerSign(0,0)"></td>
