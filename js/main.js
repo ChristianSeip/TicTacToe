@@ -65,7 +65,19 @@ function switchPlayer() {
  * @param {string} content
  */
 function replaceFieldContent(x, y, content) {
-    document.getElementById(x.toString()).getElementsByTagName('td')[y].innerText = content;
+    let element = document.getElementById(x.toString()).getElementsByTagName('td')[y];
+    element.innerText = content;
+
+    switch (content) {
+        case "x":
+            element.classList.add('playerX');
+            break;
+        case "o":
+            element.classList.add('playerO');
+            break;
+        default:
+            element.className = '';
+    }
 }
 
 /**
