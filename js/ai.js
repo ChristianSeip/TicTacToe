@@ -72,69 +72,58 @@ function checkDiagonals(pov) {
  * @returns {array}
  */
 function getBestPossibleMove(pov) {
-
     let move = [], possibleX = [], possibleY = [];
 
     for(let i = 0; i < 3; i++) {
-
         let xCount = [0,0,0], yCount = [0,0,0];   // [free, own, enemy]
 
         for(let j = 0; j < 3; j++) {
+            let index = getIndexCounter(pov, fields[i][j]);
+            xCount[index]++;
+            if(index === 0) possibleX.push([i, j]);
 
-            switch (fields[i][j]) {
-                case null:
-                    possibleX.push([i, j]);
-                    xCount[0]++;
-                    break;
-                case pov:
-                    xCount[1]++;
-                    break;
-                default:
-                    xCount[2]++;
-                    break;
-            }
-
-            switch (fields[j][i]) {
-                case null:
-                    possibleY.push([j, i]);
-                    yCount[0]++;
-                    break;
-                case pov:
-                    yCount[1]++;
-                    break;
-                default:
-                    yCount[2]++;
-                    break;
-            }
+            index = getIndexCounter(pov, fields[j][i]);
+            yCount[index]++;
+            if(index === 0) possibleY.push([j, i]);
         }
 
-        if((xCount[1] === 2 && xCount[0] === 1) || (xCount[2] === 2 && xCount[0] === 1)) {
-            return possibleX[possibleX.length - 1];
-        }
+        if((xCount[1] === 2 && xCount[0] === 1) || (xCount[2] === 2 && xCount[0] === 1)) return possibleX[possibleX.length - 1];
 
-        if((yCount[1] === 2 && yCount[0] === 1) || (yCount[2] === 2 && yCount[0] === 1)) {
-            return possibleY[possibleY.length - 1];
-        }
+        if((yCount[1] === 2 && yCount[0] === 1) || (yCount[2] === 2 && yCount[0] === 1)) return possibleY[possibleY.length - 1];
 
-        if(xCount[1] === 1 && xCount[0] === 2) {
-            move = possibleX[possibleX.length - 1];
-        }
+        if(xCount[1] === 1 && xCount[0] === 2) move = possibleX[possibleX.length - 1];
 
-        if(yCount[1] === 1 && yCount[0] === 2) {
-            move = possibleY[possibleY.length - 1];
-        }
-
+        if(yCount[1] === 1 && yCount[0] === 2) move = possibleY[possibleY.length - 1];
     }
 
-    if(move.length !== 0) {
-        return move;
+    if(move.length !== 0) return move;
+
+    if(possibleX.length !== 0) return possibleX[possibleX.length - 1];
+
+    if(possibleY.length !== 0) return possibleY[possibleY.length - 1];
+}
+
+/**
+ * Returns the index to count marker
+ *
+ * @param {string} pov
+ * @param {string} marker
+ * @returns {int}
+ */
+function getIndexCounter(pov, marker) {
+    let index;
+
+    switch (marker) {
+        case null:
+            index = 0;
+            break;
+        case pov:
+            index = 1;
+            break;
+        default:
+            index = 2;
+            break;
     }
 
-    if(possibleX.length !== 0) {
-        return possibleX[possibleX.length - 1];
-    }
-
-    if(possibleY.length !== 0) {
-        return possibleY[possibleY.length - 1];
-    }
+    return index;
 }
