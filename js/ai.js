@@ -21,6 +21,13 @@ function getBestMove(pov) {
         if(move.length !== 0) {
             return move;
         }
+
+        if(checks[i] === 'checkDiagonals') {
+            move = window[checks[i]]("x");
+            if(move.length !== 0) {
+                return move;
+            }
+        }
     }
 
     return move;
