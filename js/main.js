@@ -32,18 +32,16 @@ function resetGame() {
  * @param {int} y
  */
 function setPlayerSign(x, y) {
-    if(!isEmptyField(x, y)) {
-        alert("Das Feld ist nicht leer");
-        return;
-    }
+    if(!isEmptyField(x, y)) return;
 
     fields[x][y] = game.activePlayer;
     replaceFieldContent(x, y, game.activePlayer);
 
     if(isGameOver()) {
-        //alert(`${winner[0][0]}:${winner[0][1]}, ${winner[1][0]}:${winner[1][1]}, ${winner[2][0]}:${winner[2][1]}`)
+        showEndCard();
         return;
     }
+
     switchPlayer();
 }
 
@@ -51,8 +49,8 @@ function setPlayerSign(x, y) {
  * Switch and display current player in ui
  */
 function switchPlayer() {
-    game.activePlayer = game.activePlayer === "x" ? "y" : "x";
-    document.getElementById('current-player').innerText = game.activePlayer;
+    game.activePlayer = game.activePlayer === "x" ? "o" : "x";
+    document.getElementById('current-player').innerText = game.activePlayer.toUpperCase();
 }
 
 /**
@@ -132,4 +130,22 @@ function isGameOver() {
     }
 
     return true;
+}
+
+/**
+ * Show game end card
+ */
+function showEndCard() {
+    toggleModal();
+    document.getElementById('modal-header').innerText = "Game Over";
+    document.getElementById('modal-content').innerHTML = game.winner.length === 3 ?
+        `<p>Player <b>${fields[game.winner[0][0]][game.winner[0][1]]}<b> has won!</p>` : `<p>The Game ends because there are no more possible moves left.</p>`;
+    document.getElementById('modal-footer').innerHTML = `<button class="btn btn-primary">New Game</button>`;
+}
+
+/**
+ * Toogle modal display status
+ */
+function toggleModal() {
+    document.getElementById('modal').classList.toggle('hide');
 }

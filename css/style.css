@@ -76,3 +76,46 @@ tr:last-child td {
 td:last-child {
     border-right: 0;
 }
+
+.btn {
+    padding: 6px 12px;
+    border: unset;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.btn-primary {
+    color: rgb(222, 222, 222) !important;
+    background-color: #7413e7 !important;
+}
+
+.modal-container {
+    position: absolute;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.6);
+    color: rgb(33, 33, 33);
+    height: 250px;
+    width: 250px;
+}
+
+.modal-container h2 {
+    border-bottom: 1px solid #626262;
+    margin: 0;
+    padding: 12px;
+    padding-bottom: 0;
+}
+
+#modal-content {
+    padding: 12px;
+}
+
+#modal-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+}
+
+.hide {
+    display: none;
+}
