@@ -14,7 +14,7 @@ function move() {
  */
 function getBestMove(pov) {
     let enemy = pov === "x" ? "o" : "x";
-    let move = [checkCenter(pov), checkDiagonals(pov), checkDiagonals(enemy), getBestPossibleMove(pov), getBestPossibleMove(enemy)];
+    let move = [checkCenter(), checkDiagonals(pov), checkDiagonals(enemy), getBestPossibleMove(pov)];
 
     for(let i = 0; i < move.length; i++) {
         if(move[i].length !== 0) {
@@ -26,10 +26,9 @@ function getBestMove(pov) {
 /**
  * Check if center field is a possible move.
  *
- * @param {string} pov
  * @returns {array}
  */
-function checkCenter(pov) {
+function checkCenter() {
     return fields[1][1] === null ? [1, 1] : [];
 }
 
