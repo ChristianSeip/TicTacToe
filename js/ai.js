@@ -62,30 +62,25 @@ function checkDiagonals(pov) {
  * @returns {array}
  */
 function getBestPossibleMove(pov) {
-    let move = [], possibleX = [], possibleY = [];
+    let bestMove = [], possibleMoves = [];
 
-    for(let i = 0; i < 3; i++) {
-        let xCount = [0,0,0], yCount = [0,0,0];   // [free, own, enemy]
+    for(let round = 0; round < 2; round++) {
+        for(let i = 0; i < 3; i++) {
+            let fieldCount = [0, 0, 0]; // [free, own, enemy]
 
-        for(let j = 0; j < 3; j++) {
-            let index = getIndexCounter(pov, fields[i][j]);
-            xCount[index]++;
-            if(index === 0) possibleX.push([i, j]);
+            for(let j = 0; j < 3; j++) {
+                let a = round === 0 ? i : j, b = round === 0 ? j : i;
+                let index = getIndexCounter(pov, fields[a][b]);
 
-            index = getIndexCounter(pov, fields[j][i]);
-            yCount[index]++;
-            if(index === 0) possibleY.push([j, i]);
+                if(index === 0) possibleMoves.push([a, b]);
+            }
+
+            if((fieldCount[1] === 2 && fieldCount[0] === 1) || (fieldCount[2] === 2 && fieldCount[0] === 1)) return possibleMoves[possibleMoves.length - 1];
+            if(fieldCount[1] === 1 && fieldCount[0] === 2 && bestMove.length === 0) bestMove = possibleMoves[possibleMoves.length -1];
         }
-
-        if((xCount[1] === 2 && xCount[0] === 1) || (xCount[2] === 2 && xCount[0] === 1)) return possibleX[possibleX.length - 1];
-        if((yCount[1] === 2 && yCount[0] === 1) || (yCount[2] === 2 && yCount[0] === 1)) return possibleY[possibleY.length - 1];
-        if(xCount[1] === 1 && xCount[0] === 2) move = possibleX[possibleX.length - 1];
-        if(yCount[1] === 1 && yCount[0] === 2) move = possibleY[possibleY.length - 1];
     }
 
-    if(move.length !== 0) return move;
-    if(possibleX.length !== 0) return possibleX[possibleX.length - 1];
-    if(possibleY.length !== 0) return possibleY[possibleY.length - 1];
+    return bestMove.length === 1 ? bestMove : possibleMoves[possibleMoves.length - 1];
 }
 
 /**
