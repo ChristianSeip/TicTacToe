@@ -71,6 +71,7 @@ function getBestPossibleMove(pov) {
             for(let j = 0; j < 3; j++) {
                 let a = round === 0 ? i : j, b = round === 0 ? j : i;
                 let index = getIndexCounter(pov, fields[a][b]);
+                fieldCount[index]++;
 
                 if(index === 0) possibleMoves.push([a, b]);
             }
