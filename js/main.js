@@ -1,218 +1,85 @@
-let game = {
-    "activePlayer": "o",
-    "winner": [],
-    "ai": false,
-    "aiSign": "o",
-};
+let GAME;
 
-/**
- * Represents the game field as 2d array.
- */
-let fields = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null]
-];
-
-/**
- * Reset the current game.
- */
-function resetGame(ai) {
-    for(let x = 0; x < 3; x++) {
-        for(let y = 0; y < 3; y++) {
-            fields[x][y] = null;
-            replaceFieldContent(x, y, "");
-        }
-    }
-    game.activePlayer = "o";
-    game.winner = [];
-    game.ai = ai;
-    game.aiSign = "o";
-
-    switchPlayer(true);
+function init() {
+    showIntro();
 }
 
 /**
- * Set the sign of the current player, if field is empty.
+ * Create a new game
  *
- * @param {int} x
- * @param {int} y
+ * @param {boolean} singlePlayer
+ * @param {int} playerIndex
  */
-function setPlayerSign(x, y) {
-    if(!isEmptyField(x, y)) return;
-
-    fields[x][y] = game.activePlayer;
-    replaceFieldContent(x, y, game.activePlayer);
-
-    if(isGameOver()) {
-        showWinningLine();
-        showEndCard();
-        return;
+function createGame(singlePlayer, playerIndex) {
+    toggleModal('main-modal');
+    GAME = new Game();
+    if(singlePlayer) {
+        document.getElementById('player1').innerText = 'Computer';
+        GAME.players[1].setName('Computer');
+        GAME.players[1].setIsComputer(true);
     }
-
-    switchPlayer();
+    initPlayers(singlePlayer, playerIndex);
 }
 
 /**
- * Switch and display current player in ui.
- */
-function switchPlayer(reset = false) {
-    game.activePlayer = game.activePlayer === "x" ? "o" : "x";
-
-    if(reset) {
-        document.getElementById('playerX').classList.remove('player-inactive');
-        document.getElementById('playerO').classList.add('player-inactive');
-    }
-    else {
-        document.getElementById('playerX').classList.toggle('player-inactive');
-        document.getElementById('playerO').classList.toggle('player-inactive');
-    }
-
-    if(game.ai && game.activePlayer === game.aiSign) {
-        move();
-    }
-}
-
-/**
- * Replace the content of the given field.
+ * Init players with name
  *
- * @param {int} x
- * @param {int} y
- * @param {string} content
+ * @param {boolean} singlePlayer
+ * @param {int} playerIndex
  */
-function replaceFieldContent(x, y, content) {
-    let element = document.getElementById(x.toString()).getElementsByTagName('td')[y];
-    element.innerText = content;
-
-    switch (content) {
-        case "x":
-            element.classList.add('playerX');
-            break;
-        case "o":
-            element.classList.add('playerO');
-            break;
-        default:
-            element.className = '';
+function initPlayers(singlePlayer, playerIndex) {
+    if(playerIndex > -1) {
+        toggleModal('main-modal');
+        let name = document.getElementById('player-name');
+        if(name.value.length > 0 && name.value !== ' ') {
+            let id = 'player' + (playerIndex);
+            document.getElementById(id).innerText = name.value;
+            GAME.players[playerIndex].setName(name.value);
+        }
+        if(playerIndex === 0 && singlePlayer) {
+            return;
+        }
+    }
+    if(playerIndex < 1) {
+        getPlayerName(singlePlayer, ++playerIndex);
     }
 }
 
 /**
- * Check if the given field is empty.
+ * Ask for player name
  *
- * @param {int} x
- * @param {int} y
- * @returns {boolean}
+ * @param {boolean} singlePlayer
+ * @param {int} playerIndex
  */
-function isEmptyField(x, y) {
-    return fields[x][y] === null;
+function getPlayerName(singlePlayer, playerIndex) {
+    toggleModal('main-modal');
+    document.getElementById('modal-header').innerText = `Add Player (Player ${playerIndex + 1})`;
+    document.getElementById('modal-body').innerHTML = `
+    <label>Your Name</label><input id="player-name" type="text">
+    `;
+    document.getElementById('modal-footer').innerHTML = `
+        <button class="btn btn-primary" onclick="initPlayers(${singlePlayer}, ${playerIndex});">Save</button>`;
 }
 
 /**
- * Returns an array with field coordinates of the winning line, if any player has won.
- * Otherwise we return an empty array.
- *
- * @returns {array}
+ * Show intro card as modal window.
  */
-function getWinningLine() {
-    if(fields[1][1] !== null) {
-        if(fields[0][0] === fields[1][1] && fields[2][2] === fields[1][1]) {
-            return [[0,0], [1,1], [2,2]];
-        }
-
-        if(fields[0][2] === fields[1][1] && fields[2][0] === fields[1][1]) {
-            return [[0,2], [1,1], [2,0]];
-        }
-    }
-
-    for(let i = 0; i < 3; i++) {
-        if(fields[i][0] !== null && fields[i][1] !== null && fields[i][2] !== null) {
-            if(fields[i][0] === fields[i][1] && fields[i][2] === fields[i][1]) {
-                return [[i,0], [i,1], [i,2]];
-            }
-        }
-
-        if(fields[0][i] !== null && fields[1][i] !== null && fields[2][i] !== null) {
-            if (fields[0][i] === fields[1][i] && fields[2][i] === fields[1][i]) {
-                return [[0, i], [1, i], [2, i]];
-            }
-        }
-    }
-
-    return [];
-}
-
-/**
- * Check if game is over.
- *
- * @returns {boolean}
- */
-function isGameOver() {
-    let winner = getWinningLine();
-    if(winner.length === 3) {
-        game.winner = winner;
-        return true;
-    }
-
-    for(let x = 0; x < 3; x++) {
-        for(let y = 0; y < 3; y++) {
-            if(fields[x][y] === null) {
-                return false;
-            }
-        }
-    }
-
-    return true;
-}
-
-/**
- * Highlight fields of the winning line on game end.
- */
-function showWinningLine() {
-    if(game.winner.length === 3) {
-        document.getElementById(game.winner[0][0].toString()).getElementsByTagName('td')[game.winner[0][1]].classList.add('blinking-text');
-        document.getElementById(game.winner[1][0].toString()).getElementsByTagName('td')[game.winner[1][1]].classList.add('blinking-text');
-        document.getElementById(game.winner[2][0].toString()).getElementsByTagName('td')[game.winner[2][1]].classList.add('blinking-text');
-    }
-}
-
-/**
- * Show game end card.
- */
-function showEndCard() {
-    toggleModal();
-    document.getElementById('modal-header').innerText = "Game Over";
-    document.getElementById('modal-content').innerHTML = game.winner.length === 3 ?
-        `<p>Player <b>${fields[game.winner[0][0]][game.winner[0][1]].toUpperCase()}<b> has won!</p>` : `<p>The Game ends because there are no more possible moves left.</p>`;
-    document.getElementById('modal-footer').innerHTML = `<button class="btn btn-primary" onclick="newGame(false);">Play against friend</button>
-        <button class="btn btn-primary" onclick="newGame(true);">Play against AI</button>`;
+function showIntro() {
+    toggleModal('main-modal');
+    document.getElementById('modal-header').innerText = "Welcome to Tic Tac Toe!";
+    document.getElementById('modal-body').innerHTML = "The game is played on a 3x3 grid.<br><br>" +
+        "The first player who gets 3 marks in a row (up, down, across, or diagonally) wins the game.<br><br>" +
+        "The game is over, when all 9 squares are marked.";
+    document.getElementById('modal-footer').innerHTML = `
+        <button class="btn btn-primary" onclick="createGame(true, -1);">Play against AI</button>
+        <button class="btn btn-secondary" onclick="createGame(false, -1);">Play against friend</button>`;
 }
 
 /**
  * Toogle modal display status.
- */
-function toggleModal() {
-    document.getElementById('modal').classList.toggle('hide');
-}
-
-/**
- * Show welcome card as modal window.
- */
-function showWelcomeCard() {
-    toggleModal();
-    document.getElementById('modal-header').innerText = "Welcome to Tic Tac Toe!";
-    document.getElementById('modal-content').innerHTML = "The game is played on a 3x3 grid.<br><br>" +
-        "The first player who gets 3 marks in a row (up, down, across, or diagonally) wins the game.<br><br>" +
-        "The game is over, when all 9 squares are marked.";
-    document.getElementById('modal-footer').innerHTML = `<button class="btn btn-primary" onclick="newGame(false);">Play against friend</button>
-        <button class="btn btn-primary" onclick="newGame(true);">Play against AI</button>`;
-}
-
-/**
- * Start new Game.
  *
- * @param {boolean} ai
+ * @param {string} id
  */
-function newGame(ai = false) {
-    resetGame(ai);
-    toggleModal();
+function toggleModal(id) {
+    document.getElementById(id).classList.toggle('hidden');
 }

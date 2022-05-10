@@ -1,0 +1,103 @@
+.game-field-container {
+    display: table;
+    width: 399px;
+    height: 399px;
+    border-collapse: collapse;
+}
+
+.game-field {
+    display: table-row-group;
+}
+
+.game-field-row {
+    display: table-row;
+}
+
+.game-field-row div {
+    font-size: 6em;
+    text-align: center;
+    text-transform: uppercase;
+    border: 1px solid #999999;
+    display: table-cell;
+    height: 33%;
+    width: 33%;
+}
+
+.player-indication {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.6em;
+    font-weight: bold;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    width: 399px;
+}
+
+.player {
+    margin-left: 12px;
+}
+
+.playerX {
+    color: aqua;
+}
+
+.playerO {
+    color: crimson;
+}
+
+.player-inactive {
+    color: #b7b7b7;
+}
+
+.blinking-text {
+    animation:blinking-text 850ms infinite;
+    background-color: rgba(252, 248, 87, 0.25);
+}
+
+@keyframes blinking-text {
+    0% {
+        color: rgba(116, 19, 231, 0.25);
+    }
+    49% {
+        color: rgba(116, 19, 231, 0.50);
+    }
+    60% {
+        color: rgba(116, 19, 231, 0.75);
+    }
+    99% {
+        color:transparent;
+    }
+    100% {
+        color: rgba(116, 19, 231, 0.25);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .game-field-container {
+        width: 300px;
+        height: 300px;
+    }
+
+    .player-indication {
+        width: 300px;
+    }
+
+    .game-field-row div {
+        font-size: 5em;
+    }
+}
+
+@media screen and (max-width: 310px) {
+    .game-field-container {
+        width: 240px;
+        height: 240px;
+    }
+
+    .player-indication {
+        width: 240px;
+    }
+
+    .game-field-row div {
+        font-size: 4em;
+    }
+}

@@ -3,49 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/main.js"></script>
-    <script src="js/ai.js"></script>
+    <title>Tic Tac Toe - seip.io</title>
+    <link rel="icon" type="image/x-icon" href="/images/fav.ico">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/game.css">
+    <script src="/js/AI.class.js"></script>
+    <script src="/js/Player.class.js"></script>
+    <script src="/js/Game.class.js"></script>
+    <script src="/js/TTT.class.js"></script>
+    <script src="/js/main.js"></script>
 </head>
-<body onload="showWelcomeCard();">
+<body onload="init()">
 
-<div id="modal" class="container hide">
-    <div class="modal-container">
+<header class="main-header">
+    <h1><a href="https://ttt.seip.io">Tic Tac Toe</a></h1>
+    <nav class="main-navigation">
+        <ul class="inline-list">
+            <li><a href="https://ttt.seip.io">Restart</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div id="main-modal" class="container hidden">
+    <section class="modal">
         <h2 id="modal-header"></h2>
-        <div id="modal-content">
-        </div>
-        <div id="modal-footer">
-        </div>
-    </div>
+        <div id="modal-body"></div>
+        <div id="modal-footer"></div>
+    </section>
 </div>
 
 <div class="container">
     <main>
         <div class="player-indication">
-            <span>Player <span id="playerX" class="ff-squarepeg player playerX player-inactive">X</span></span>
-            <span>Player <span id="playerO" class="ff-squarepeg player playerO">O</span></span>
+            <span><span id="player0">Player</span> <span id="playerX" class="ff-squarepeg player playerX">X</span></span>
+            <span><span id="player1">Player</span> <span id="playerO" class="ff-squarepeg player playerO player-inactive">O</span></span>
         </div>
-        <table>
-            <tr id="0">
-                <td onclick="setPlayerSign(0,0)"></td>
-                <td onclick="setPlayerSign(0,1)"></td>
-                <td onclick="setPlayerSign(0,2)"></td>
-            </tr>
-            <tr id="1">
-                <td onclick="setPlayerSign(1,0)"></td>
-                <td onclick="setPlayerSign(1,1)"></td>
-                <td onclick="setPlayerSign(1,2)"></td>
-            </tr>
-            <tr id="2">
-                <td onclick="setPlayerSign(2,0)"></td>
-                <td onclick="setPlayerSign(2,1)"></td>
-                <td onclick="setPlayerSign(2,2)"></td>
-            </tr>
-        </table>
+
+        <div class="game-field-container ff-squarepeg">
+            <div class="game-field">
+                <div id="0" class="game-field-row">
+                    <div onclick="GAME.turn(0, 0)"></div>
+                    <div onclick="GAME.turn(0, 1)"></div>
+                    <div onclick="GAME.turn(0, 2)"></div>
+                </div>
+                <div id="1" class="game-field-row">
+                    <div onclick="GAME.turn(1, 0)"></div>
+                    <div onclick="GAME.turn(1, 1)"></div>
+                    <div onclick="GAME.turn(1, 2)"></div>
+                </div>
+                <div id="2" class="game-field-row">
+                    <div onclick="GAME.turn(2, 0)"></div>
+                    <div onclick="GAME.turn(2, 1)"></div>
+                    <div onclick="GAME.turn(2, 2)"></div>
+                </div>
+            </div>
+        </div>
     </main>
 </div>
 
+<footer>
+    <nav class="footer-navigation">
+        <ul class="inline-list">
+            <li><a href="https://www.seip.io/imprint">Imprint</a></li>
+            <li><a href="https://www.seip.io/privacy">Privacy</a></li>
+        </ul>
+    </nav>
+    <div class="copyright">
+        Copyright &copy; 2022 <a href="https://www.seip.io">seip.io</a>
+    </div>
+</footer>
 </body>
 </html>
